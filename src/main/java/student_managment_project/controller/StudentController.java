@@ -22,7 +22,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDetailDto> detail(Long studentId){
+    public ResponseEntity<StudentDetailDto> detail(@RequestParam("id") Long studentId){
         return ResponseEntity.ok(studentService.findByStudent(studentId));
     }
 
