@@ -1,14 +1,13 @@
 package student_managment_project.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.websocket.Decoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.util.Base64;
 import java.util.Date;
 
 @Service
@@ -23,7 +22,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyByte);
     }
 
-    private String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails){
         Date now = new Date();
 
         Date expiration = new Date(
@@ -37,4 +36,33 @@ public class JwtService {
                 .signWith(getLoginKey())
                 .compact();
     }
+
+    public String extractUsername(String token){
+        return extractAllClaims(token).getSubject();
+    }
+
+    public Claims extractAllClaims(String token){
+
+        return Jwts.parser()
+                .verifyWith(getLoginKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    public boolean isTokenValid(
+            String token,
+            UserDetails userDetails
+    ){
+        String username = extractUsername(token);
+
+        return username.equals(userDetails.getUsername())
+                && userDetails.isEnabled()
+                && userDetails.isAccountNonLocked()
+                && userDetails.isCredentialsNonExpired()
+                && userDetails.isCredentialsNonExpired();
+    }
+
+
+
 }
