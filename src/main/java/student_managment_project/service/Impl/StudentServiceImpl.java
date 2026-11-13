@@ -53,6 +53,42 @@ public class StudentServiceImpl implements StudentService {
         return toResponse("created user", true);
     }
 
+
+//    @Transactional
+    public StudentResponseDto createStudent() {
+
+        StudentEntity student1 = StudentEntity.builder()
+                .name("Alizamin")
+                .surname("Orujzade")
+                .email("alizamin@gmail.com")
+                .age(26)
+                .build();
+
+
+//        StudentEntity student2 = StudentEntity.builder()
+//                .name("Orxan")
+//                .surname("Memmedli")
+//                .age(29)
+//                .build();
+
+        StudentEntity student3 = StudentEntity.builder()
+                .name("Peri")
+                .surname("Novruzova")
+                .email("alizamin@gmail.com")
+                .age(35)
+                .build();
+
+
+        repository.save(student1);
+//        repository.save(student2);
+        repository.save(student3);
+
+
+        return toResponse("created user", true);
+    }
+
+
+
     @Override
     public StudentResponseDto deleteStudent(StudentDeleteDto deleteDto) {
 

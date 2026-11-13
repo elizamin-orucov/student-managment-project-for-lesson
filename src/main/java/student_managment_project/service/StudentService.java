@@ -15,6 +15,8 @@ public interface StudentService {
 
     StudentResponseDto createStudent(StudentCreateDto createDto);
 
+    StudentResponseDto createStudent();
+
     StudentResponseDto deleteStudent(StudentDeleteDto deleteDto);
 
 }

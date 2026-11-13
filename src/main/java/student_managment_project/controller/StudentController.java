@@ -31,6 +31,12 @@ public class StudentController {
         return ResponseEntity.ok(studentService.updateStudent(update));
     }
 
+    @GetMapping("/public/create")
+    public ResponseEntity<String> createUserTest(){
+        studentService.createStudent();
+        return ResponseEntity.ok("test");
+    }
+
     @PostMapping
     public ResponseEntity<StudentResponseDto> create(@RequestBody StudentCreateDto createDto){
         return ResponseEntity.status(201).body(studentService.createStudent(createDto));
